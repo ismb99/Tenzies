@@ -16,9 +16,49 @@ export default function App() {
     }
     return newDice;
   }
+  function unHoldice() {
+    const newNum = [];
+    for (let i = 0; i < dice.length; i++) {
+      const die = dice[i];
+      console.log(dice);
+
+      if (die.isHeld === false) {
+        newNum.push({
+          ...die,
+          value: Math.ceil(Math.random() * 6),
+        });
+      } else {
+        newNum.push(die);
+      }
+    }
+    console.log("slutet av funktion", newNum);
+    return newNum;
+  }
+
+  //   setDice((oldDice) => {
+  //     const newNum = [];
+  //     for (let i = 0; i < dice.length; i++) {
+  //       const die = dice[i];
+  //       console.log(dice);
+
+  //       if (die.isHeld === false) {
+  //         newNum.push({
+  //           ...die,
+  //           value: Math.ceil(Math.random() * 6),
+  //         });
+  //       } else {
+  //         return newNum.push(die);
+  //       }
+  //     }
+  //     return newNum;
+  //   });
+  // }
+
+  console.log("utanför", dice);
 
   function rollDice() {
-    setDice(allNewDice());
+    setDice(unHoldice);
+    console.log("roll dice", dice);
   }
 
   function holdDice(id) {
