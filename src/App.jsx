@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Die from "./Die";
 import { nanoid } from "nanoid";
+import Confetti from "react-confetti";
 
 export default function App() {
   const [dice, setDice] = useState(allNewDice());
@@ -20,7 +21,6 @@ export default function App() {
     const newNum = [];
     for (let i = 0; i < dice.length; i++) {
       const die = dice[i];
-      console.log(dice);
 
       if (die.isHeld === false) {
         newNum.push({
@@ -31,7 +31,6 @@ export default function App() {
         newNum.push(die);
       }
     }
-    console.log("slutet av funktion", newNum);
     return newNum;
   }
 
@@ -54,10 +53,8 @@ export default function App() {
   //   });
   // }
 
-  console.log("utanför", dice);
-
   function rollDice() {
-    setDice(unHoldice);
+    setDice(unHoldice());
     console.log("roll dice", dice);
   }
 
@@ -84,6 +81,7 @@ export default function App() {
       <button className="roll-dice" onClick={rollDice}>
         Roll
       </button>
+      <Confetti />
     </main>
   );
 }
