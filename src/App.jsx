@@ -17,7 +17,7 @@ export default function App() {
     }
     return newDice;
   }
-  function unHoldice() {
+  function rollUnheldDice() {
     const newNum = [];
     for (let i = 0; i < dice.length; i++) {
       const die = dice[i];
@@ -34,28 +34,12 @@ export default function App() {
     return newNum;
   }
 
-  //   setDice((oldDice) => {
-  //     const newNum = [];
-  //     for (let i = 0; i < dice.length; i++) {
-  //       const die = dice[i];
-  //       console.log(dice);
-
-  //       if (die.isHeld === false) {
-  //         newNum.push({
-  //           ...die,
-  //           value: Math.ceil(Math.random() * 6),
-  //         });
-  //       } else {
-  //         return newNum.push(die);
-  //       }
-  //     }
-  //     return newNum;
-  //   });
-  // }
-
   function rollDice() {
-    setDice(unHoldice());
-    console.log("roll dice", dice);
+    setDice((oldDice) =>
+      oldDice.map((die) => {
+        die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) };
+      })
+    );
   }
 
   function holdDice(id) {
