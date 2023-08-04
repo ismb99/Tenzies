@@ -6,9 +6,12 @@ import Confetti from "react-confetti";
 export default function App() {
   const [dice, setDice] = useState(allNewDice());
   const [gameFinished, setGameFinished] = useState(false);
+  const [count, setCount] = useState(0);
   useEffect(() => {
     checkValues();
   }, [dice]);
+
+  console.log(count);
 
   function allNewDice() {
     const newDice = [];
@@ -21,8 +24,8 @@ export default function App() {
     }
     return newDice;
   }
-
   function rollDice() {
+    setCount((oldCount) => oldCount + 1);
     setDice((oldDice) =>
       oldDice.map((die) => {
         return die.isHeld === false
@@ -34,13 +37,10 @@ export default function App() {
 
   function checkValues() {
     const firstValue = dice[0].value;
-    console.log(firstValue);
     const allSame = dice.every((die) => die.value === firstValue);
     if (allSame) {
-      console.log("All values are the same:", firstValue);
       setGameFinished(true);
     } else {
-      console.log("The values are not all the same.");
       setGameFinished(false);
     }
   }
@@ -69,8 +69,13 @@ export default function App() {
   return (
     <main>
       {/* if gameFinished true render confetti and newGame else render rollDice */}
+      <h2>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste similique
+        neque cumque in.
+      </h2>
       <div className="dice-container">{diceElements}</div>
 
+      <h3>Num Rolls:{count}</h3>
       <button className="roll-dice" onClick={rollDice}>
         Roll
       </button>
