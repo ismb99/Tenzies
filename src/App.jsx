@@ -5,6 +5,10 @@ import Confetti from "react-confetti";
 
 export default function App() {
   const [dice, setDice] = useState(allNewDice());
+  const [gameFinished, setGameFinished] = useState(false);
+  useEffect(() => {
+    checkValues();
+  }, [dice]);
 
   function allNewDice() {
     const newDice = [];
@@ -17,29 +21,28 @@ export default function App() {
     }
     return newDice;
   }
-  function rollUnheldDice() {
-    const newNum = [];
-    for (let i = 0; i < dice.length; i++) {
-      const die = dice[i];
-
-      if (die.isHeld === false) {
-        newNum.push({
-          ...die,
-          value: Math.ceil(Math.random() * 6),
-        });
-      } else {
-        newNum.push(die);
-      }
-    }
-    return newNum;
-  }
 
   function rollDice() {
     setDice((oldDice) =>
       oldDice.map((die) => {
-        die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) };
+        return die.isHeld === false
+          ? { ...die, value: Math.ceil(Math.random() * 6) }
+          : die;
       })
     );
+  }
+
+  function checkValues() {
+    const firstValue = dice[0].value;
+    console.log(firstValue);
+    const allSame = dice.every((die) => die.value === firstValue);
+    if (allSame) {
+      console.log("All values are the same:", firstValue);
+      setGameFinished(true);
+    } else {
+      console.log("The values are not all the same.");
+      setGameFinished(false);
+    }
   }
 
   function holdDice(id) {
@@ -48,6 +51,10 @@ export default function App() {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
       })
     );
+  }
+
+  function newGame() {
+    setDice(allNewDice);
   }
 
   const diceElements = dice.map((die) => (
@@ -61,11 +68,20 @@ export default function App() {
 
   return (
     <main>
+      {/* if gameFinished true render confetti and newGame else render rollDice */}
       <div className="dice-container">{diceElements}</div>
+
       <button className="roll-dice" onClick={rollDice}>
         Roll
       </button>
-      <Confetti />
+      {gameFinished ? (
+        <>
+          <button className="roll-dice" onClick={newGame}>
+            New Game
+          </button>
+          <Confetti />
+        </>
+      ) : null}
     </main>
   );
 }
