@@ -25,7 +25,6 @@ export default function App() {
     return newDice;
   }
   function rollDice() {
-    setCount((oldCount) => oldCount + 1);
     setDice((oldDice) =>
       oldDice.map((die) => {
         return die.isHeld === false
@@ -33,6 +32,7 @@ export default function App() {
           : die;
       })
     );
+    setCount((oldCount) => oldCount + 1);
   }
 
   function checkValues() {
@@ -54,6 +54,7 @@ export default function App() {
   }
 
   function newGame() {
+    setCount(0);
     setDice(allNewDice);
   }
 
@@ -76,17 +77,19 @@ export default function App() {
       <div className="dice-container">{diceElements}</div>
 
       <h3>Num Rolls:{count}</h3>
-      <button className="roll-dice" onClick={rollDice}>
-        Roll
-      </button>
+
       {gameFinished ? (
         <>
+          <Confetti />
           <button className="roll-dice" onClick={newGame}>
             New Game
           </button>
-          <Confetti />
         </>
-      ) : null}
+      ) : (
+        <button className="roll-dice" onClick={rollDice}>
+          Roll
+        </button>
+      )}
     </main>
   );
 }
