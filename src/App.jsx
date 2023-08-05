@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Die from "./Die";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
+import Timer from "./Timer";
 
 export default function App() {
   const [dice, setDice] = useState(allNewDice());
@@ -72,6 +73,7 @@ export default function App() {
       <div className="dice-container">{diceElements}</div>
 
       <h3>Roll Count: {rollCount}</h3>
+      <Timer />
 
       {gameFinished ? (
         <>
