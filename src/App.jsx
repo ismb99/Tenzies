@@ -6,12 +6,11 @@ import Confetti from "react-confetti";
 export default function App() {
   const [dice, setDice] = useState(allNewDice());
   const [gameFinished, setGameFinished] = useState(false);
-  const [count, setCount] = useState(0);
+  const [rollCount, setRollCount] = useState(0);
+
   useEffect(() => {
     checkValues();
-  }, [dice]);
-
-  console.log(count);
+  }, [dice]); // kör checkValue varje gång state ändras på dice
 
   function allNewDice() {
     const newDice = [];
@@ -32,17 +31,13 @@ export default function App() {
           : die;
       })
     );
-    setCount((oldCount) => oldCount + 1);
+    setRollCount((oldCount) => oldCount + 1); // går det göra på ett bättre sätt?
   }
 
   function checkValues() {
     const firstValue = dice[0].value;
     const allSame = dice.every((die) => die.value === firstValue);
-    if (allSame) {
-      setGameFinished(true);
-    } else {
-      setGameFinished(false);
-    }
+    allSame ? setGameFinished(true) : setGameFinished(false);
   }
 
   function holdDice(id) {
@@ -54,7 +49,7 @@ export default function App() {
   }
 
   function newGame() {
-    setCount(0);
+    setRollCount(0);
     setDice(allNewDice);
   }
 
@@ -69,14 +64,14 @@ export default function App() {
 
   return (
     <main>
-      {/* if gameFinished true render confetti and newGame else render rollDice */}
-      <h2>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste similique
-        neque cumque in.
-      </h2>
+      <h1 className="title">Tenzies</h1>
+      <p className="instructions">
+        Play until all dice show the same number. Click on each die to keep its
+        current value between rolls.
+      </p>
       <div className="dice-container">{diceElements}</div>
 
-      <h3>Num Rolls:{count}</h3>
+      <h3>Roll Count: {rollCount}</h3>
 
       {gameFinished ? (
         <>
