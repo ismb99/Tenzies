@@ -3,13 +3,12 @@ import React, { useState, useEffect } from "react";
 export default function Timer() {
   const [seconds, setSeconds] = useState(0);
 
+  // save time to localstorage and show the best time
+
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds + 1);
     }, 1000);
-
-    // Rensa intervallet när komponenten avmonteras
-    return () => clearInterval(interval);
   }, []);
 
   const formatTime = (time) => {

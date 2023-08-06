@@ -32,13 +32,22 @@ export default function App() {
           : die;
       })
     );
-    setRollCount((oldCount) => oldCount + 1); // går det göra på ett bättre sätt?
+    setRollCount((oldCount) => oldCount + 1);
   }
 
   function checkValues() {
     const firstValue = dice[0].value;
-    const allSame = dice.every((die) => die.value === firstValue);
-    allSame ? setGameFinished(true) : setGameFinished(false);
+    const allHeld = dice.every((die) => die.isHeld);
+    const allSameValue = dice.every((die) => die.value === firstValue);
+
+    if (allHeld && allSameValue) {
+      setGameFinished(true);
+      console.log("You won");
+    } else {
+      setGameFinished(false);
+    }
+
+    // allSameValue ? setGameFinished(true) : setGameFinished(false);
   }
 
   function holdDice(id) {
