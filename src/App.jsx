@@ -95,7 +95,7 @@ export default function App() {
 
       <h3>Roll Count: {rollCount}</h3>
       <h3>Lowest roll: {lowestRoll}</h3>
-      <Timer />
+      <Timer gameFinished={gameFinished} />
 
       {gameFinished ? (
         <>
