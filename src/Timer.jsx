@@ -6,7 +6,7 @@ export default function Timer() {
   // save time to localstorage and show the best time
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds + 1);
     }, 1000);
   }, []);

@@ -8,6 +8,19 @@ export default function App() {
   const [dice, setDice] = useState(allNewDice());
   const [gameFinished, setGameFinished] = useState(false);
   const [rollCount, setRollCount] = useState(0);
+  const [lowestRoll, setLowestRoll] = useState(
+    JSON.parse(localStorage.getItem("lowestRoll") || 100)
+  );
+
+  useEffect(() => {
+    if (gameFinished && rollCount < lowestRoll) {
+      localStorage.setItem("lowestRoll", JSON.stringify(rollCount));
+      setLowestRoll(rollCount);
+    }
+  }, [gameFinished]);
+
+  console.log(lowestRoll);
+  console.log(typeof lowestRoll);
 
   useEffect(() => {
     checkValues();
@@ -46,7 +59,6 @@ export default function App() {
     } else {
       setGameFinished(false);
     }
-
     // allSameValue ? setGameFinished(true) : setGameFinished(false);
   }
 
@@ -82,6 +94,7 @@ export default function App() {
       <div className="dice-container">{diceElements}</div>
 
       <h3>Roll Count: {rollCount}</h3>
+      <h3>Lowest roll: {lowestRoll}</h3>
       <Timer />
 
       {gameFinished ? (
